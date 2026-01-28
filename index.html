@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Registration Form</title>
+    <link rel="stylesheet" href="style.css">
+
+    <script>
+        function validateForm() {
+
+            var valid = true;
+
+            document.getElementById("nameError").innerHTML = "";
+            document.getElementById("emailError").innerHTML = "";
+            document.getElementById("passwordError").innerHTML = "";
+            document.getElementById("confirmPasswordError").innerHTML = "";
+            document.getElementById("mobileError").innerHTML = "";
+            document.getElementById("genderError").innerHTML = "";
+            document.getElementById("termsError").innerHTML = "";
+
+            var name = document.getElementById("name").value.trim();
+            var email = document.getElementById("email").value.trim();
+            var password = document.getElementById("password").value;
+            var confirmPassword = document.getElementById("confirmPassword").value;
+            var mobile = document.getElementById("mobile").value;
+            var gender = document.getElementsByName("gender");
+            var terms = document.getElementById("terms").checked;
+
+            var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            var mobilePattern = /^[0-9]{10}$/;
+
+            if (name === "") {
+                document.getElementById("nameError").innerHTML = "Name cannot be empty";
+                valid = false;
+            }
+
+            if (!emailPattern.test(email)) {
+                document.getElementById("emailError").innerHTML = "Invalid email format";
+                valid = false;
+            }
+
+            if (password.length < 8) {
+                document.getElementById("passwordError").innerHTML = "Password must be at least 8 characters";
+                valid = false;
+            }
+
+            if (password !== confirmPassword) {
+                document.getElementById("confirmPasswordError").innerHTML = "Passwords do not match";
+                valid = false;
+            }
+
+            if (!mobilePattern.test(mobile)) {
+                document.getElementById("mobileError").innerHTML = "Mobile number must be 10 digits";
+                valid = false;
+            }
+
+            var genderSelected = false;
+            for (var i = 0; i < gender.length; i++) {
+                if (gender[i].checked) {
+                    genderSelected = true;
+                    break;
+                }
+            }
+
+            if (!genderSelected) {
+                document.getElementById("genderError").innerHTML = "Please select a gender";
+                valid = false;
+            }
+
+            if (!terms) {
+                document.getElementById("termsError").innerHTML = "You must accept the terms";
+                valid = false;
+            }
+
+            if (valid) {
+                alert("Submission successful!");
+            }
+
+            return valid;
+        }
+    </script>
+</head>
+
+<body>
+
+<form onsubmit="return validateForm()">
+
+    <h2>Registration Form</h2>
+
+    <label>Name:</label><br>
+    <input type="text" id="name"><br>
+    <span id="nameError"></span>
+
+    <label>Email:</label><br>
+    <input type="text" id="email"><br>
+    <span id="emailError"></span>
+
+    <label>Password:</label><br>
+    <input type="password" id="password"><br>
+    <span id="passwordError"></span>
+
+    <label>Confirm Password:</label><br>
+    <input type="password" id="confirmPassword"><br>
+    <span id="confirmPasswordError"></span>
+
+    <label>Mobile Number:</label><br>
+    <input type="text" id="mobile"><br>
+    <span id="mobileError"></span>
+
+    <label>Gender:</label><br>
+    <input type="radio" name="gender" value="Male"> Male
+    <input type="radio" name="gender" value="Female"> Female<br>
+    <span id="genderError"></span>
+
+    <input type="checkbox" id="terms"> I accept the Terms & Conditions<br>
+    <span id="termsError"></span>
+
+    <input type="submit" value="Register">
+
+</form>
+
+</body>
+</html>
